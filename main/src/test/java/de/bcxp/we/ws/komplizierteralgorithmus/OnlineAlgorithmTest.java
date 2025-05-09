@@ -70,4 +70,46 @@ class OnlineAlgorithmTest {
         }
     }
 
+    @Test
+    void testNumbersEndingInPointFive() {
+        OnlineAlgorithm onlineAlgorithm = new OnlineAlgorithm();
+        double[] input = {0.5, 1.5, 2.5, 3.5, 4.5, -0.5, -1.5, -2.5};
+        double expectedSum = Arrays.stream(input).sum();
+        for (double i : input) {
+            System.out.println(onlineAlgorithm.add(i));
+        }
+        System.out.println(expectedSum);
+        System.out.println(onlineAlgorithm.getRoundedSum());
+        assertEquals(expectedSum, onlineAlgorithm.getRoundedSum());
+    }
+
+    @Test
+    void testVerySmallNumbers() {
+        OnlineAlgorithm onlineAlgorithm = new OnlineAlgorithm();
+        double[] input = {0.0001, -0.0001, 0.0002, -0.0002, 0.0003, -0.0003};
+        double expectedSum = Arrays.stream(input).sum();
+        for (double i : input) {
+            System.out.println(onlineAlgorithm.add(i));
+        }
+        System.out.println(expectedSum);
+        System.out.println(onlineAlgorithm.getRoundedSum());
+        assertEquals(expectedSum, onlineAlgorithm.getRoundedSum());
+    }
+
+    @Test
+    void testIndividualRoundedNumbers() {
+        OnlineAlgorithm onlineAlgorithm = new OnlineAlgorithm();
+        double[] input = {1.2, 2.7, 3.1, 4.4, 5.5, -2.1};
+        int[] expectedRoundedValues = {1, 3, 3, 4, 6, -2}; // Expected rounded values for each input
+        int[] actualRoundedValues = new int[input.length];
+
+        for (int i = 0; i < input.length; i++) {
+            actualRoundedValues[i] = onlineAlgorithm.add(input[i]);
+        }
+
+        assertEquals(Arrays.toString(expectedRoundedValues), Arrays.toString(actualRoundedValues),
+            "Rounded values mismatch. Expected: " + Arrays.toString(expectedRoundedValues) +
+            ", but got: " + Arrays.toString(actualRoundedValues));
+    }
+
 }

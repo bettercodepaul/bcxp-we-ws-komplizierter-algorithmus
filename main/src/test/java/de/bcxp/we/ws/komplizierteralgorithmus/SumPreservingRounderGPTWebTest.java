@@ -100,15 +100,7 @@ public class SumPreservingRounderGPTWebTest {
     public void testAllAbovePointFive() {
         List<Double> input = Arrays.asList(1.6, 1.7, 1.8);
         List<Integer> output = SumPreservingRounderGPTWeb.roundPreserveSum(input);
-
-        // Einzelne Runden genauer überprüfen
-        System.out.println("Rundungen:");
-        System.out.println("1.6 -> " + output.get(0));  // Erwartet: 2
-        System.out.println("1.7 -> " + output.get(1));  // Erwartet: 2
-        System.out.println("1.8 -> " + output.get(2));  // Erwartet: 2
-
-        // Jetzt die Summe vergleichen
-        assertEquals(6, sum(output));  // Summe sollte 6 sein (2 + 2 + 2 = 6)
+        assertEquals(5, sum(output));
     }
 
 

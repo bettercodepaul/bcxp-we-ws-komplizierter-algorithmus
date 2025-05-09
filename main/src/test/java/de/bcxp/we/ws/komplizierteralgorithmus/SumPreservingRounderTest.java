@@ -2,8 +2,8 @@ package de.bcxp.we.ws.komplizierteralgorithmus;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 
+import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SumPreservingRounderTest {
@@ -13,17 +13,27 @@ class SumPreservingRounderTest {
         double[] input = {1.2, 2.7, 3.1};
         int[] rounded = SumPreservingRounder.roundPreservingSum(input);
 
-        assertEquals(7, Arrays.stream(rounded).sum());
-        assertEquals(Math.round(Arrays.stream(input).sum()), Arrays.stream(rounded).sum());
+        assertArrayEquals(new int[]{1, 3, 3}, rounded, "Gerundete Werte stimmen nicht überein.");
+        assertEquals(Math.round(Arrays.stream(input).sum()), Arrays.stream(rounded).sum(), "Summen der gerundeten Zahlen stimmen nicht überein.");
     }
 
     @Test
     void testNegativeNumbers() {
-        double[] input = {-1.2, 2.7, -3.1};
+        double[] input = {-1.2, -2.7, -3.1};
         int[] rounded = SumPreservingRounder.roundPreservingSum(input);
 
-        assertEquals(-2, Arrays.stream(rounded).sum());
-        assertEquals(Math.round(Arrays.stream(input).sum()), Arrays.stream(rounded).sum());
+        assertArrayEquals(new int[]{-1, -3, -3}, rounded, "Gerundete Werte stimmen nicht überein.");
+        assertEquals(Math.round(Arrays.stream(input).sum()), Arrays.stream(rounded).sum(), "Summen der gerundeten Zahlen stimmen nicht überein.");
+    }
+
+    @Test
+    void testMixedSigns() {
+        double[] input = {-3.8, -2.6, 1.4, 2.1, 1.9};
+        int[] expectedRounded = {-4, -2, 1, 2, 2}; // Beispielannahme
+        int[] rounded = SumPreservingRounder.roundPreservingSum(input);
+
+        assertArrayEquals(expectedRounded, rounded, "Gerundete Werte stimmen nicht überein.");
+        assertEquals(Math.round(Arrays.stream(input).sum()), Arrays.stream(rounded).sum(), "Summen der gerundeten Zahlen stimmen nicht überein.");
     }
 
     @Test
@@ -31,7 +41,8 @@ class SumPreservingRounderTest {
         double[] input = {};
         int[] rounded = SumPreservingRounder.roundPreservingSum(input);
 
-        assertEquals(0, rounded.length);
+        assertArrayEquals(new int[]{}, rounded, "Gerundete Werte stimmen nicht überein.");
+        assertEquals(0, Arrays.stream(rounded).sum(), "Summen der gerundeten Zahlen stimmen nicht überein.");
     }
 
     @Test
@@ -39,8 +50,8 @@ class SumPreservingRounderTest {
         double[] input = {3.7};
         int[] rounded = SumPreservingRounder.roundPreservingSum(input);
 
-        assertEquals(4, rounded[0]);
-        assertEquals(1, rounded.length);
+        assertArrayEquals(new int[]{4}, rounded, "Gerundete Werte stimmen nicht überein.");
+        assertEquals(4, Arrays.stream(rounded).sum(), "Summen der gerundeten Zahlen stimmen nicht überein.");
     }
 
     @Test
@@ -48,6 +59,17 @@ class SumPreservingRounderTest {
         double[] input = {1.0, 2.0, 3.0};
         int[] rounded = SumPreservingRounder.roundPreservingSum(input);
 
-        assertArrayEquals(new int[]{1, 2, 3}, rounded);
+        assertArrayEquals(new int[]{1, 2, 3}, rounded, "Gerundete Werte stimmen nicht überein.");
+        assertEquals(6, Arrays.stream(rounded).sum(), "Summen der gerundeten Zahlen stimmen nicht überein.");
+    }
+
+    @Test
+    void testSumPreservingRoundingExample() {
+        double[] input = {2.2, 2.2, 2.2, 2.2, 2.2};
+        int[] expectedRounded = {3, 2, 2, 2, 2};
+        int[] rounded = SumPreservingRounder.roundPreservingSum(input);
+
+        assertArrayEquals(expectedRounded, rounded, "Gerundete Werte stimmen nicht überein.");
+        assertEquals(11, Arrays.stream(rounded).sum(), "Summen der gerundeten Zahlen stimmen nicht überein.");
     }
 }
